@@ -5,7 +5,7 @@ class StringFilter {
 	const UNDERSCORE = "_";
 	const SPACE = " ";
 
-	const REGEX_UCFIRST = "/([A-Z][a-z0-9]+)/"
+	const REGEX_UCFIRST = "/([A-Z][a-z0-9]+)/";
 
 
 	public function camelCaseToUnderscore($string)
@@ -13,11 +13,13 @@ class StringFilter {
 		$matches = array();
 		preg_match_all(self::REGEX_UCFIRST, $string, $matches);
 
-		array_walk($matches, function(&$item, $key) {
-			$item = strtolower($item);
-		})
+		if (empty($matches)) return $string;
 
-		return  implode(self::UNDERSCORE, $matches);
+		array_walk($matches[0], function(&$item, $key) {
+			$item = strtolower($item);
+		});
+
+		return  implode(self::UNDERSCORE, $matches[0]);
 	}
 
 
@@ -26,13 +28,15 @@ class StringFilter {
 		$matches = array();
 		preg_match_all(self::REGEX_UCFIRST, $string, $matches);
 
+		if (empty($matches)) return $string;
+
 		if ($toLower) {
-			array_walk($matches, function(&$item, $key) {
+			array_walk($matches[0], function(&$item, $key) {
 				$item = strtolower($item);
-			})
+			});
 		}
 
-		return  implode(self::UNDERSCORE, $matches);
+		return  implode(self::SPACE, $matches[0]);
 	}
 
 }

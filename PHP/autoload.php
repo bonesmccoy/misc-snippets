@@ -1,6 +1,6 @@
 <?php
-
-function __autoload($className)
+spl_autoload_register(function($className)
 {
-  include __DIR__ . "/src/". $className . ".php";
-}
+  include __DIR__ . "/src/" . $className . ".php";
+
+});
